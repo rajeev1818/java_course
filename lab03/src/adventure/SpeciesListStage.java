@@ -98,6 +98,13 @@ public class SpeciesListStage implements AdventureStage {
      */
     public static double arraySimilarity(List<String> listOne, List<String> listTwo) {
         List<String> copy = new ArrayList<>(listOne);
+        int size;
+        if(listOne.size()==0){
+            size=1;
+        }
+        else{
+            size=listOne.size();
+        }
         int similarObjects = 0;
         for (String o : listTwo) {
             if (copy.contains(o)) {
@@ -105,6 +112,6 @@ public class SpeciesListStage implements AdventureStage {
                 copy.remove(o);
             }
         }
-        return similarObjects / listOne.size();
+        return (1.0)*similarObjects /size;
     }
 }

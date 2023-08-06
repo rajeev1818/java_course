@@ -61,4 +61,6 @@ public class ListExercisesTest {
         assertThat(ListExercises.countOccurrencesOfC(lst, 'a')).isEqualTo(0);
     }
 
+
+
 }

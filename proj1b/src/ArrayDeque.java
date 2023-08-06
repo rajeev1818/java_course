@@ -1,35 +1,11 @@
-package deque;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ArrayDeque<T> implements Deque<T> {
-    private int frontIndex;
-    private int backIndex;
+    private static int frontIndex;
+    private static int backIndex;
     private T[] items;
-    private int length;
-
-    private class ArrayDequeIterator implements Iterator<T>{
-
-        private int index;
-        private ArrayDequeIterator(){
-            index=0;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return index<length;
-        }
-
-        @Override
-        public T next() {
-            T returnValue= get(index);
-            index+=1;
-            return returnValue;
-        }
-    }
-
+    private static int length;
 
     public ArrayDeque(){
         items= (T[]) new Object[8];
@@ -42,24 +18,15 @@ public class ArrayDeque<T> implements Deque<T> {
     public static void main(String[] args){
         Deque<Integer>dq= new ArrayDeque<>();
 
-        dq.addFirst(20);
-        dq.addFirst(30);
-        dq.addLast(50);
-        dq.addLast(40);
-        for(Integer x:dq){
-            System.out.println(x);
+        for(int i=0;i<200;i++){
+            dq.addLast(i);
         }
 
-        Deque<String>d2= new ArrayDeque<>();
-
-        d2.addFirst("Josh");
-        d2.addLast("Hug");
-        d2.addLast("is");
-        d2.addLast("awesome");
-
-        for(String x:d2){
-            System.out.println(x);
+        for(int i=0;i<160;i++){
+            dq.removeFirst();
         }
+
+
 
 
     }
@@ -98,10 +65,11 @@ public class ArrayDeque<T> implements Deque<T> {
         items=newArr;
     }
 
+
     @Override
     public void addFirst(T x) {
 
-        if(length ==items.length){
+        if(length ==this.items.length){
             resizeUp();
             addFirst(x);
         }
@@ -122,7 +90,7 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public void addLast(T x) {
 
-        if(length==items.length){
+        if(length==this.items.length){
             resizeUp();
             addLast(x);
         }
@@ -206,43 +174,8 @@ public class ArrayDeque<T> implements Deque<T> {
         if(index < 0 || index >= length){
             return null;
         }
+
         int actualIndex = (frontIndex+1+index) % items.length;
         return items[actualIndex];
     }
-
-    @Override
-    public T getRecursive(int index) {
-        return get(index);
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ArrayDequeIterator();
-    }
-
-    @Override
-    public boolean equals(Object o){
-        if(this==o) return true;
-
-        if(o instanceof ArrayDeque other){
-            if(other.length!=this.length){
-                return false;
-            }
-
-            for(T x:this){
-                if(!other.toList().contains(x)){
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String toString(){
-        return this.toList().toString();
-
-    }
-
 }

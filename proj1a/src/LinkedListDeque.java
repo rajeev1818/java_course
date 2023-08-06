@@ -1,38 +1,10 @@
-package deque;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LinkedListDeque<T> implements Deque<T> {
 
     Node<T> sentinel;
     int size;
-
-    private class LinkedListIterator implements Iterator<T>{
-        int index;
-        private LinkedListIterator(){
-            index=0;
-        }
-        @Override
-        public boolean hasNext() {
-            return index<size;
-        }
-
-        @Override
-        public T next() {
-            T returnValue= get(index);
-            index+=1;
-            return returnValue;
-        }
-    }
-
-
-    @Override
-    public Iterator<T> iterator() {
-        return new LinkedListIterator();
-    }
 
     private static class Node<T>{
         T data;
@@ -58,13 +30,9 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     public static void main(String[] args){
-        Deque<String> lld1 = new LinkedListDeque<>();
-
-        lld1.addLast("front");
-        lld1.addLast("middle");
-        lld1.addLast("back");
-
-        System.out.println(lld1);
+        Deque<Integer>lld= new LinkedListDeque<>();
+        lld.addFirst(10);
+        lld.addFirst(20);
     }
 
     @Override
@@ -156,7 +124,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     }
 
-    private T helperGetRecursive(Node<T> ref,int index,int curr){
+    public T helperGetRecursive(Node<T> ref,int index,int curr){
         if(ref==sentinel){
             return null;
         }
@@ -176,30 +144,5 @@ public class LinkedListDeque<T> implements Deque<T> {
     @Override
     public T getRecursive(int index) {
         return helperGetRecursive(sentinel.next,index,0);
-    }
-
-    @Override
-    public boolean equals(Object o){
-        if(this==o) return true;
-
-        if(o instanceof LinkedListDeque other){
-            if(other.size!=this.size){
-                return false;
-            }
-
-            for(T x:this){
-                if(!other.toList().contains(x)){
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public String toString(){
-        return this.toList().toString();
-
     }
 }
